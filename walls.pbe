@@ -1,1 +1,12 @@
 
+public class walls {
+  public PVector lwall;
+  public PVector rwall;
+  public PVector net;
+
+  public walls(float sketchWidth, float sketchHeight) {
+    lwall = new PVector(0, 0);
+    rwall = new PVector(sketchWidth, 0);
+    net = new PVector(sketchWidth/2, sketchHeight-300);
+  }
+}
