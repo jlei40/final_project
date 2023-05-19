@@ -1,1 +1,36 @@
 
+public class birde {
+  private PVector direction;
+  private PVector birdePos;
+  private float size = 30;
+
+  public birde(PVector playerPos) {
+    birdePos = new PVector(playerPos.x+30, playerPos.y);
+    if (playerPos.x < width/2 ){
+      direction = new PVector(1,1);
+    } else {
+      direction = new PVector(-1,1);
+    }
+    
+  }
+  public boolean hitbox(Racket racket){
+    if(rectRect(birdePos.x, birdePos.y, size, size, racket.racketPos.x, racket.racketPos.y, racket.size, racket.size)){
+           return true;
+    } else return false;
+
+  }
+  boolean rectRect(float r1x, float r1y, float r1w, float r1h, float r2x, float r2y, float r2w, float r2h) {
+
+  // are the sides of one rectangle touching the other?
+
+  if (r1x + r1w >= r2x &&    // r1 right edge past r2 left
+      r1x <= r2x + r2w &&    // r1 left edge past r2 right
+      r1y + r1h >= r2y &&    // r1 top edge past r2 bottom
+      r1y <= r2y + r2h) {    // r1 bottom edge past r2 top
+        return true;
+  }
+  return false;
+}
+
+  
+}
