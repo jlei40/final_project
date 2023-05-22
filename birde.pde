@@ -64,11 +64,27 @@ public class Birdie {
   
   }
   
-  void keyPressed() {
-    PVector leftHit = new PVector(0.3, -0.1);
-    if (key == 's'){
+void keyPressed() {
+    PVector leftHit = new PVector(0.8, -1);
+    PVector rightHit = new PVector(-0.8, -1);
+    int i  = 0;
+    if (key == 's' && hit == true){
+      birdieRotation = PI-0.5;
+      while ( i < 10){
        birdieVelocity.add(leftHit);
+       i++;
+      }
     }
+    
+    if (keyCode == DOWN && hit == true){
+      birdieRotation = 0.4;
+      while ( i < 10){
+       birdieVelocity.add(rightHit);
+       i++;
+      }
+    }
+    
+    
   }
 
   
