@@ -1,21 +1,25 @@
-walls wallsInstance;  // Declare an instance of the walls class
-
+Walls wallsInstance;  // Declare an instance of the walls class
+Racket racketOne;
+Racket racketTwo; 
+Birdie birdie;
+PVector playerPos = new PVector(100,100);
+PVector playerPos2 = new PVector(200,200);
 void setup() {
-  size(1400, 800);  // Set the size of the sketch window
+  size(1400, 800);
+  wallsInstance = new Walls(width,height); 
+  racketOne = new Racket(playerPos);
+  birdie = new Birdie(playerPos2);
 
-  wallsInstance = new walls(width,height);  // Initialize the walls instance
-  // Access the PVector variables from the walls instance
-  PVector lwall = wallsInstance.lwall;
-  PVector rwall = wallsInstance.rwall;
-  PVector net = wallsInstance.net;
-
-  // Use the PVector variables to draw rectangles
-  fill(#000000);
-  rect(lwall.x, lwall.y, 20, height);  // Draw a rectangle using lwall PVector
-  rect(rwall.x - 20, rwall.y, 20, height);  // Draw a rectangle using rwall PVector
-  rect(net.x - 5, net.y, 10, height);  // Draw a rectangle using net PVector
 }
 
 void draw() {
-  // Your draw code goes here
+  background(220);
+  wallsInstance.makeWalls();
+  racketOne.makeRacket();
+  birdie.updateBirdie();
+  birdie.makeBirdie();
+}
+void keyPressed() {
+  
+  birdie.keyPressed();
 }
