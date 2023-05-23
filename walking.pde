@@ -41,10 +41,14 @@ public void keyPressed(){
     }
   } else if (keyCode == UP && player1Y == 85){
     player1Y -= 30;    
+  } else if (keyCode == DOWN && swingX == 15 && swingY == 12){
+    swingX -= 10;
+    swingY -= 10; 
   }
 }
 
 public void gravity(){
   if (player1Y < 85) player1Y++; 
-
+  if (swingX < 15) swingX++; 
+  if (swingY < 12) swingY++; 
 }

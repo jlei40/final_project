@@ -1,9 +1,11 @@
+private int swingX = 15;
+private int swingY = 12;
 
 public void player1(int x, int y){
   scale(4);
   circle(x,y+10,10); // head
   line(x,y+15,x, y+40); // body
-  line(x,y+25,x+15, y+12); // arm1
+  line(x,y+25,x+swingX, y+swingY); // arm1
   line(x,y+25,x-10, y+47); // arm2
   if (getAnimation1())
   walk11(x,y);
