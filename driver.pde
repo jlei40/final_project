@@ -111,7 +111,6 @@
     if (right1) player1X++;
     if (right2) player2X++;
     if (left2) player2X--; 
-   
   }
   
 
@@ -119,17 +118,18 @@
   public void keyPressed(){
     if (keyCode == 65) left1 = true; 
     
-    if (keyCode == 68 && player1X < 140) right1 = true;
+    if (keyCode == 68 ) right1 = true;
      
     if (keyCode == 87 && player1Y == 85){
       player1Y -= 30;    
     } 
+    
     if (keyCode == DOWN && swing1X == 15 && swing1Y == 12){
-      swing1X -= 10;
-      swing1Y -= 10; 
+      swing1X -= 30;
+      swing1Y -= 13; 
     } 
-    if (keyCode == LEFT && player2X > 170) left2 = true;
-      
+    
+    if (keyCode == LEFT) left2 = true;
    
     if (keyCode == RIGHT) right2 = true; 
 
@@ -137,8 +137,8 @@
         player2Y -= 30; 
     } 
     if (keyCode == 83 && swing2X == 15 && swing2Y == 12){
-        swing2X -= 10;
-        swing2Y -= 10; 
+        swing2X -= 30;
+        swing2Y -= 13; 
     }
   }
     
