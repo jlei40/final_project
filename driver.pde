@@ -20,6 +20,8 @@
   private boolean swing1 = false;
   private boolean swing2 = false; 
   
+  private int time = 0; 
+  
   public void setup(){
     size(1250,625);
   }  
@@ -37,9 +39,11 @@
     player1make(player1X, player1Y); 
     player2make(player2X, player2Y); 
     gravity();
+    walkanimations(); 
   }
   
   public void walkanimations(){
+    if (time == 20){
       if (animation3){
         animation3 = false;
         animation4 = true;
@@ -54,6 +58,11 @@
         animation1 = true;
         animation2 = false; 
       }
+      time = 0;
+    }
+    if (player1X % 2 == 0) time++; 
+    
+
   }
   
   
