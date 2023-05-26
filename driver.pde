@@ -17,6 +17,8 @@
   private boolean left2 = false;
   private boolean right2 = false; 
   
+  private boolean swing1 = false;
+  private boolean swing2 = false; 
   
   public void setup(){
     size(1250,625);
@@ -100,46 +102,38 @@
   
    public void gravity(){
     if (player1Y < 85) player1Y++; 
-    if (swing1X < 15) swing1X++; 
-    if (swing1Y < 12) swing1Y++;
-    
     if (player2Y < 85) player2Y++;
-    if (swing2X < 15) swing2X++;
-    if (swing2Y < 12) swing2Y++; 
+
+    if (left1 && player1X > 0) player1X--;
+    if (right1 && player1X < 145) player1X++;
+    if (right2 && player2X < 312) player2X++;
+    if (left2 && player2X > 168) player2X--; 
     
-    if (left1) player1X--;
-    if (right1) player1X++;
-    if (right2) player2X++;
-    if (left2) player2X--; 
+    if (swing2 && swing2X > -15) swing2X -=3;
+    if (swing2 && swing2Y > 2) swing2Y -= 2;
+    if (swing2X == -15) swing2 = false;
+    if (!swing2 && swing2X < 15) swing2X +=3; 
+    if (!swing2 && swing2Y < 12) swing2Y +=2;
+    
+    if (swing1 && swing1X > -15) swing1X -=3;
+    if (swing1 && swing1Y > 2) swing1Y -= 2;
+    if (swing1X == -15) swing1 = false;
+    if (!swing1 && swing1X < 15) swing1X +=3; 
+    if (!swing1 && swing1Y < 12) swing1Y +=2;
   }
   
 
   
   public void keyPressed(){
     if (keyCode == 65) left1 = true; 
-    
     if (keyCode == 68 ) right1 = true;
-     
-    if (keyCode == 87 && player1Y == 85){
-      player1Y -= 30;    
-    } 
-    
-    if (keyCode == DOWN && swing1X == 15 && swing1Y == 12){
-      swing1X -= 30;
-      swing1Y -= 13; 
-    } 
-    
+    if (keyCode == 87 && player1Y == 85) player1Y -= 30;    
+    if (keyCode == 83 && swing2X == 15 && swing2Y == 12) swing2 = true; 
+    if (keyCode == DOWN && swing1X == 15 && swing1Y == 12) swing1 = true;  
     if (keyCode == LEFT) left2 = true;
-   
     if (keyCode == RIGHT) right2 = true; 
-
-    if (keyCode == UP && player2Y == 85){
-        player2Y -= 30; 
-    } 
-    if (keyCode == 83 && swing2X == 15 && swing2Y == 12){
-        swing2X -= 30;
-        swing2Y -= 13; 
-    }
+    if (keyCode == UP && player2Y == 85) player2Y -= 30; 
+    
   }
     
     public void keyReleased(){
@@ -147,6 +141,8 @@
       if (keyCode == 68) right1 = false;
       if (keyCode == LEFT) left2 = false;
       if (keyCode == RIGHT) right2 = false; 
+
+
     }
   
   
