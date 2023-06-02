@@ -22,8 +22,18 @@
   
   private int time = 0; 
   
+  Racket racketLeft;
+  Racket racketRight; 
+  Birdie birdie;
+  PVector playerPos = new PVector(player2X-swing2X, player2Y+swing2Y);
+  PVector playerPos2 = new PVector(player1X+swing1X, player1Y+swing1Y);
+
+  
   public void setup(){
     size(1250,625);
+    racketLeft = new Racket(playerPos);
+    racketRight = new Racket(playerPos2);
+    birdie = new Birdie(playerPos2);
   }  
   
   public void fieldmake(){
@@ -36,10 +46,20 @@
   public void draw(){
     background(#E1B387);
     fieldmake();
-    player1make(player1X, player1Y); 
-    player2make(player2X, player2Y); 
     gravity();
     walkanimations(); 
+    
+   
+    birdie.updateBirdie();
+    birdie.makeBirdie();
+    
+    player1make(player1X, player1Y); 
+    player2make(player2X, player2Y); 
+    
+     
+    racketLeft.makeRacket(player2X+swing1X, player2Y+swing1Y);
+    racketRight.makeRacket(player1X-swing2X, player1Y+swing2Y);
+    
   }
   
   public void walkanimations(){
@@ -142,6 +162,9 @@
     if (keyCode == LEFT) left2 = true;
     if (keyCode == RIGHT) right2 = true; 
     if (keyCode == UP && player2Y == 85) player2Y -= 30; 
+    racketLeft.keyPressed();
+    racketRight.keyPressed();
+    birdie.keyPressed();
     
   }
     
