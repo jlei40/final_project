@@ -43,7 +43,7 @@ PVector playerPos2 = new PVector(player1Pos.x + swing1Pos.x, player1Pos.y + swin
     fill(#E1B200);
     rect(0, 800, 1400, 900);
     fill(#FFFFFF);
-    rect(width/2,500,10,300);
+    rect(695,500,10,300);
   }
 
   public void draw(){
@@ -94,7 +94,7 @@ PVector playerPos2 = new PVector(player1Pos.x + swing1Pos.x, player1Pos.y + swin
   
   
 public void player1make(PVector pos) {
-pushMatrix(); // Save the current transformation matrix
+  pushMatrix(); // Save the current transformation matrix
   scale(4); // Apply the scale locally
   circle(pos.x, pos.y + 10, 10); // head
   line(pos.x, pos.y + 15, pos.x, pos.y + 40); // body
@@ -152,9 +152,9 @@ public void gravity() {
     player2Pos.add(player2Velocity);
     }else {player2Velocity.y = 3;}
   if (left1 && player1Pos.x > 0) player1Pos.x--;
-  if (right1 && player1Pos.x < 145) player1Pos.x++;
-  if (right2 && player2Pos.x < 312) player2Pos.x++;
-  if (left2 && player2Pos.x > 168) player2Pos.x--;
+  if (right1 && player1Pos.x  < 164 ) player1Pos.x++;
+  if (right2 && player2Pos.x < 350) player2Pos.x++;
+  if (left2 && player2Pos.x > 186) player2Pos.x--;
 
   if (swing2 && swing2Pos.x > -15) swing2Pos.x -= 2;
   if (swing2 && swing2Pos.y > 2) swing2Pos.y -= 2;
@@ -193,8 +193,6 @@ public void keyPressed() {
       if (keyCode == 68) right1 = false;
       if (keyCode == LEFT) left2 = false;
       if (keyCode == RIGHT) right2 = false; 
-
-
     }
   
   
