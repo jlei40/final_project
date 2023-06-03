@@ -6,6 +6,9 @@ public class Birdie {
   private float birdieRotation;
   private PVector birdieVelocity;
   private boolean hit;
+  private int leftScore;
+  private int rightScore;
+  private boolean startRound;
   public Birdie(PVector playerPos) {
     birdiePos = new PVector(playerPos.x+30, playerPos.y);
     if (playerPos.x < width/2 ) {
@@ -16,6 +19,9 @@ public class Birdie {
     birdieRotation = PI;
     birdieVelocity = new PVector(0, 0);
     hit = true;
+    leftScore = 0;
+    rightScore = 0;
+    startRound = true;
   }
   public boolean hitbox(Racket racket) {
     if (rectRect(birdiePos.x, birdiePos.y, size, size, racket.racketPos.x, racket.racketPos.y, racket.size, racket.size)) {
@@ -46,6 +52,7 @@ public class Birdie {
   }
 
   public void updateBirdie() {
+    if(!startRound){
     PVector gravity = new PVector(0, 0.1);
     birdieVelocity.add(gravity);
     if (birdieVelocity.x > 0 ) {
@@ -63,9 +70,38 @@ public class Birdie {
       // Reverse velocity upon hitting the ground
       birdieVelocity.y *= -0.9;  // Adjust the bounce factor as needed
       birdiePos.y = height;
+      delay(1);
+      score();
+    }
+    }else {
+    return;
     }
   }
-
+  void score() {
+    System.out.println(leftScore);
+    if (birdiePos.x > width/2) {
+      leftScore++;
+      startRound = true;
+      birdiePos = racketLeft.racketPos;
+    } else {
+      rightScore++;
+      startRound = true;
+      birdiePos = racketRight.racketPos;
+    }
+    if (rightScore > 6) {
+      textAlign(CENTER, CENTER);
+      textSize(60);
+      fill(0, 255, 0);
+      text("PLayer2 win!", width/2, height/2);
+      noLoop();
+    } else if (leftScore > 6){
+      textAlign(CENTER, CENTER);
+      textSize(32);
+      fill(0, 255, 0);
+      text("PLayer1 win!", width/2, height/2);
+      noLoop();
+    }
+  }
   void keyPressed() {
     PVector leftHit1 = new PVector(10, -7);
     PVector leftHit2 = new PVector(12, -5);
@@ -76,6 +112,8 @@ public class Birdie {
     PVector rightHit3 = new PVector(-14, -4);
     PVector rightHit4 = new PVector(-20, 10);
     if (key == 's' && hit == true) {
+      startRound = false;
+
       birdieVelocity.x = 0;
       birdieVelocity.y = 0;
       if (racketLeft.racketState == 0) {
@@ -97,25 +135,26 @@ public class Birdie {
       }
     }
 
-      if (keyCode == DOWN && hit == true) {
-        birdieVelocity.x = 0;
-        birdieVelocity.y = 0;
-        if (racketRight.racketState == 0) {
-          birdieRotation = 0.4;
-          birdieVelocity.add(rightHit1);
-        }
-        if (racketRight.racketState == 1) {
-          birdieRotation = 0.4;
-          birdieVelocity.add(rightHit2);
-        }
-        if (racketRight.racketState == 2) {
-          birdieRotation = 0.4;
-          birdieVelocity.add(rightHit3);
-        }
-        if (racketRight.racketState == 3) {
-          birdieRotation = 0.4;
-          birdieVelocity.add(rightHit4);
-        }
+    if (keyCode == DOWN && hit == true) {
+      birdieVelocity.x = 0;
+      birdieVelocity.y = 0;
+            startRound = false;
+      if (racketRight.racketState == 0) {
+        birdieRotation = 0.4;
+        birdieVelocity.add(rightHit1);
+      }
+      if (racketRight.racketState == 1) {
+        birdieRotation = 0.4;
+        birdieVelocity.add(rightHit2);
+      }
+      if (racketRight.racketState == 2) {
+        birdieRotation = 0.4;
+        birdieVelocity.add(rightHit3);
+      }
+      if (racketRight.racketState == 3) {
+        birdieRotation = 0.4;
+        birdieVelocity.add(rightHit4);
       }
     }
+  }
 }
