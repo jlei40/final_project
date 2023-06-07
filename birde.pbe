@@ -9,7 +9,7 @@ public class Birdie {
   private int rightScore;
   private boolean startRound;
   public Birdie(PVector playerPos) {
-    birdiePos = new PVector(playerPos.x+30, playerPos.y);
+    birdiePos = new PVector(playerPos.x*4, playerPos.y*4);
     birdieRotation = PI;
     birdieVelocity = new PVector(0, 0);
     hit = true;
@@ -18,9 +18,21 @@ public class Birdie {
     startRound = true;
   }
   public boolean hitbox(Racket racket) {
-    if (rectRect(birdiePos.x, birdiePos.y, size, size, racket.racketPos.x, racket.racketPos.y, racket.size, racket.size)) {
-      return true;
-    } else return false;
+    //System.out.println(birdiePos.x);
+    //System.out.println(racket.racketPos.x);
+  if(racket.leftSide){
+if (rectRect(birdiePos.x, birdiePos.y, size, size, racket.racketPos.x-150, racket.racketPos.y-150, racket.size, racket.size)) {
+  //for seeing
+  rect(racket.racketPos.x-150, racket.racketPos.y-150, racket.size, racket.size);
+  return true;
+} else return false;
+  } else {
+if (rectRect(birdiePos.x, birdiePos.y, size, size, racket.racketPos.x+150, racket.racketPos.y-150, racket.size, racket.size)) {
+  rect(racket.racketPos.x+150, racket.racketPos.y-150, racket.size, racket.size);
+  return true;
+} else return false;
+  
+  }
   }
   boolean rectRect(float r1x, float r1y, float r1w, float r1h, float r2x, float r2y, float r2w, float r2h) {
 
@@ -46,6 +58,7 @@ public class Birdie {
   }
 
   public void updateBirdie() {
+
     if(!startRound){
     PVector gravity = new PVector(0, 0.1);
     birdieVelocity.add(gravity);
@@ -60,11 +73,10 @@ public class Birdie {
     birdiePos.add(birdieVelocity);
 
     // Check boundaries
-    if (birdiePos.y > height) {
+    if (birdiePos.y > height-100) {
       // Reverse velocity upon hitting the ground
-      birdieVelocity.y *= -0.9;  // Adjust the bounce factor as needed
-      birdiePos.y = height;
-      delay(1);
+      //birdieVelocity.y *= -0.9;  // Adjust the bounce factor as needed
+      //birdiePos.y = height-100;
       score();
     }
     }else {
@@ -72,15 +84,17 @@ public class Birdie {
     }
   }
   void score() {
-    System.out.println(leftScore);
+
     if (birdiePos.x > width/2) {
       leftScore++;
       startRound = true;
       birdiePos = racketLeft.racketPos;
+
     } else {
       rightScore++;
       startRound = true;
       birdiePos = racketRight.racketPos;
+
     }
     if (rightScore > 6) {
       textAlign(CENTER, CENTER);
@@ -96,6 +110,7 @@ public class Birdie {
       noLoop();
     }
   }
+  //good to go
   void keyPressed() {
     PVector leftHit1 = new PVector(10, -7);
     PVector leftHit2 = new PVector(12, -5);
@@ -105,7 +120,7 @@ public class Birdie {
     PVector rightHit2 = new PVector(-12, -5);
     PVector rightHit3 = new PVector(-14, -4);
     PVector rightHit4 = new PVector(-20, 10);
-    if (key == 's' && hit == true) {
+    if (key == 's'&& hit == true ) {
       startRound = false;
 
       birdieVelocity.x = 0;
