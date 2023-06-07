@@ -1,6 +1,5 @@
 
 public class Birdie {
-  private PVector direction;
   private PVector birdiePos;
   private int size = 35;
   private float birdieRotation;
@@ -10,12 +9,7 @@ public class Birdie {
   private int rightScore;
   private boolean startRound;
   public Birdie(PVector playerPos) {
-    birdiePos = new PVector(playerPos.x+30, playerPos.y);
-    if (playerPos.x < width/2 ) {
-      direction = new PVector(1, 1);
-    } else {
-      direction = new PVector(-1, 1);
-    }
+    birdiePos = new PVector(playerPos.x * 4, playerPos.y * 4);
     birdieRotation = PI;
     birdieVelocity = new PVector(0, 0);
     hit = true;

@@ -1,14 +1,14 @@
 
+
 public class Racket {
   private PVector racketPos;
   private int size = 100;
-  private int buffer = 0;
   private boolean leftSide = true;
   private int racketState = 0; // Initial state of the racket
   private int lastStateChangeTime = 0; // Time of the last state change
   private int stateChangeInterval = 100; // Interval between state changes in milliseconds
-  private int leftRotation = 40;
-  private int rightRotation = 140;
+  private int leftRotation = 220;
+  private int rightRotation = 320;
   public Racket(PVector playerPos, boolean left) {
     racketPos = new PVector(0, 0);
     racketPos.x = playerPos.x;
@@ -19,17 +19,18 @@ public class Racket {
   public void makeRacket(PVector pos) {
     if (leftSide) {
       pushMatrix();
-      translate(pos.x*4-160, pos.y*4-40);
+      translate(pos.x*4-55, pos.y*4+55);
       rotate(radians(leftRotation));
-      ellipse(0, 0, size, size/3);
-      rect(0, 0, size*1.5, size/10);
+      rect(0,0, size*1.5, size/10);
+      ellipse(size*1.5,  size/10, size, size/3);
+
       popMatrix();
     } else {
       pushMatrix();
-      translate(pos.x*4+160, pos.y*4-40);
+      translate(pos.x*4+55, pos.y*4+55);
       rotate(radians(rightRotation));
-      ellipse(0, 0, size, size/3);
-      rect(0, -10, size*1.5, size/10);
+      rect(0, 10, size*1.5, size/10);
+      ellipse(size*1.5,  size/10, size, size/3);
       popMatrix();
     }
   }
