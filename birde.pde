@@ -18,17 +18,26 @@ public class Birdie {
     startRound = true;
   }
   public boolean hitbox(Racket racket) {
-    //System.out.println(birdiePos.x);
-    //System.out.println(racket.racketPos.x);
+
   if(racket.leftSide){
-if (rectRect(birdiePos.x, birdiePos.y, size, size, racket.racketPos.x-150, racket.racketPos.y-150, racket.size, racket.size)) {
-  //for seeing
-  rect(racket.racketPos.x-150, racket.racketPos.y-150, racket.size, racket.size);
+      float x = racket.racketPos.x  + racket.size * cos(radians(racket.leftRotation))*2;
+  float y = racket.racketPos.y-30 + racket.size * sin(radians(racket.leftRotation))*2;
+if (rectRect(birdiePos.x, birdiePos.y, size, size, x, y, racket.size, racket.size)) {
+
+  
+  // Draw the racket
+  rect(x, y, racket.size, racket.size);
   return true;
 } else return false;
   } else {
-if (rectRect(birdiePos.x, birdiePos.y, size, size, racket.racketPos.x+150, racket.racketPos.y-150, racket.size, racket.size)) {
-  rect(racket.racketPos.x+150, racket.racketPos.y-150, racket.size, racket.size);
+      float x = racket.racketPos.x  + racket.size * cos(radians(racket.rightRotation))*2;
+  float y = racket.racketPos.y-30 + racket.size * sin(radians(racket.rightRotation))*2;
+if (rectRect(birdiePos.x, birdiePos.y, size, size, x, y, racket.size, racket.size)) {
+
+  
+  // Draw the racket
+  rect(x, y, racket.size, racket.size);
+  
   return true;
 } else return false;
   
@@ -88,14 +97,14 @@ if (rectRect(birdiePos.x, birdiePos.y, size, size, racket.racketPos.x+150, racke
     if (birdiePos.x > width/2) {
       leftScore++;
       startRound = true;
-      birdiePos.x = racketLeft.racketPos.x;
-       birdiePos.y = racketLeft.racketPos.y - 200;
+      birdiePos.x = width/4;
+       birdiePos.y = 200;
 
     } else {
       rightScore++;
       startRound = true;
-       birdiePos.x = racketRight.racketPos.x;
-       birdiePos.y = racketRight.racketPos.y - 200;
+       birdiePos.x = width/2 + width/4;
+       birdiePos.y = 200;
 
     }
     if (rightScore > 6) {
@@ -168,4 +177,8 @@ if (rectRect(birdiePos.x, birdiePos.y, size, size, racket.racketPos.x+150, racke
       }
     }
   }
-}
+}  float x = racket.racketPos.x - 150 + racket.size * cos(radians(racket.leftRotation));
+  float y = racket.racketPos.y - 150 + racket.size * sin(radians(racket.leftRotation));
+  
+  // Draw the racket
+  rect(x, y, racket.size, racket.size);
