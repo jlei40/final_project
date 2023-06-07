@@ -88,12 +88,14 @@ if (rectRect(birdiePos.x, birdiePos.y, size, size, racket.racketPos.x+150, racke
     if (birdiePos.x > width/2) {
       leftScore++;
       startRound = true;
-      birdiePos = racketLeft.racketPos;
+      birdiePos.x = racketLeft.racketPos.x+150;
+       birdiePos.y = racketLeft.racketPos.y-200;
 
     } else {
       rightScore++;
       startRound = true;
-      birdiePos = racketRight.racketPos;
+            birdiePos.x = racketRight.racketPos.x-150;
+       birdiePos.y = racketRight.racketPos.y-200;
 
     }
     if (rightScore > 6) {
