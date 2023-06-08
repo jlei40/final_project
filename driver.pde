@@ -261,7 +261,7 @@ racketRight.racketState = 0;
   if (keyCode == LEFT) left2 = true;
   if (keyCode == RIGHT) right2 = true;
   if (keyCode == UP && player2Pos.y > 134) player2Velocity.add(jumpV);
-  if (key == 'p') reset();
+  if (key == 'r') reset();
 }
 
 
