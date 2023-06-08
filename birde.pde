@@ -9,7 +9,7 @@ public class Birdie {
   private int rightScore;
   private boolean startRound;
   public Birdie(PVector playerPos) {
-    birdiePos = new PVector(playerPos.x*4, playerPos.y*4);
+    birdiePos = new PVector(playerPos.x*4, playerPos.y*4-70);
     birdieRotation = PI;
     birdieVelocity = new PVector(0, 0);
     hit = true;
@@ -18,30 +18,24 @@ public class Birdie {
     startRound = true;
   }
   public boolean hitbox(Racket racket) {
-
-  if(racket.leftSide){
+    rect(birdiePos.x-20, birdiePos.y-10, size, size);
+    if (racket.leftSide) {
       float x = racket.racketPos.x  + racket.size * cos(radians(racket.leftRotation))*2;
-  float y = racket.racketPos.y-30 + racket.size * sin(radians(racket.leftRotation))*2;
-if (rectRect(birdiePos.x, birdiePos.y, size, size, x, y, racket.size, racket.size)) {
-
-  
-  // Draw the racket
-  rect(x, y, racket.size, racket.size);
-  return true;
-} else return false;
-  } else {
+      float y = racket.racketPos.y-30 + racket.size * sin(radians(racket.leftRotation))*2;
+      if (rectRect(birdiePos.x-20, birdiePos.y-10, size, size, x, y, racket.size, racket.size)) {
+        rect(x, y, racket.size, racket.size);
+        return true;
+      } else return false;
+    } else {
       float x = racket.racketPos.x  + racket.size * cos(radians(racket.rightRotation))*2;
-  float y = racket.racketPos.y-30 + racket.size * sin(radians(racket.rightRotation))*2;
-if (rectRect(birdiePos.x, birdiePos.y, size, size, x, y, racket.size, racket.size)) {
+      float y = racket.racketPos.y-30 + racket.size * sin(radians(racket.rightRotation))*2;
+      if (rectRect(birdiePos.x-20, birdiePos.y-10, size, size, x, y, racket.size, racket.size)) {
 
-  
-  // Draw the racket
-  rect(x, y, racket.size, racket.size);
-  
-  return true;
-} else return false;
-  
-  }
+        rect(x, y, racket.size, racket.size);
+
+        return true;
+      } else return false;
+    }
   }
   boolean rectRect(float r1x, float r1y, float r1w, float r1h, float r2x, float r2y, float r2w, float r2h) {
 
@@ -68,28 +62,25 @@ if (rectRect(birdiePos.x, birdiePos.y, size, size, x, y, racket.size, racket.siz
 
   public void updateBirdie() {
 
-    if(!startRound){
-    PVector gravity = new PVector(0, 0.1);
-    birdieVelocity.add(gravity);
-    if (birdieVelocity.x > 0 ) {
-      birdieRotation += 0.01;
+    if (!startRound) {
+      PVector gravity = new PVector(0, 0.1);
+      birdieVelocity.add(gravity);
+      if (birdieVelocity.x > 0 ) {
+        birdieRotation += 0.01;
+      } else {
+        birdieRotation -= 0.01;
+      }
+
+
+      // Update position
+      birdiePos.add(birdieVelocity);
+
+      // Check boundaries
+      if (birdiePos.y > height-100) {
+        score();
+      }
     } else {
-      birdieRotation -= 0.01;
-    }
-
-
-    // Update position
-    birdiePos.add(birdieVelocity);
-
-    // Check boundaries
-    if (birdiePos.y > height-100) {
-      // Reverse velocity upon hitting the ground
-      //birdieVelocity.y *= -0.9;  // Adjust the bounce factor as needed
-      //birdiePos.y = height-100;
-      score();
-    }
-    }else {
-    return;
+      return;
     }
   }
   void score() {
@@ -98,14 +89,14 @@ if (rectRect(birdiePos.x, birdiePos.y, size, size, x, y, racket.size, racket.siz
       leftScore++;
       startRound = true;
       birdiePos.x = width/4;
-       birdiePos.y = 200;
-
+      birdiePos.y = 450;
+      birdieVelocity = new PVector(0, 0);
     } else {
       rightScore++;
       startRound = true;
-       birdiePos.x = width/2 + width/4;
-       birdiePos.y = 200;
-
+      birdiePos.x = width/2 + width/4;
+      birdiePos.y = 450;
+      birdieVelocity = new PVector(0, 0);
     }
     if (rightScore > 6) {
       textAlign(CENTER, CENTER);
@@ -113,7 +104,7 @@ if (rectRect(birdiePos.x, birdiePos.y, size, size, x, y, racket.size, racket.siz
       fill(0, 255, 0);
       text("PLayer2 win!", width/2, height/2);
       noLoop();
-    } else if (leftScore > 6){
+    } else if (leftScore > 6) {
       textAlign(CENTER, CENTER);
       textSize(32);
       fill(0, 255, 0);
@@ -122,63 +113,62 @@ if (rectRect(birdiePos.x, birdiePos.y, size, size, x, y, racket.size, racket.siz
     }
   }
   //good to go
-  void keyPressed() {
+  void leftSwings() {
     PVector leftHit1 = new PVector(10, -7);
     PVector leftHit2 = new PVector(12, -5);
     PVector leftHit3 = new PVector(14, -4);
     PVector leftHit4 = new PVector(20, 10);
+if(onceLeft){
+        birdie.birdieVelocity.x = 0;
+    birdie.birdieVelocity.y = 0;
+    if (racketLeft.racketState == 0) {
+      birdieRotation = PI-0.5;
+      birdieVelocity.add(leftHit1);
+    }
+
+    if (racketLeft.racketState == 1) {
+      birdieRotation = PI-0.5;
+      birdieVelocity.add(leftHit2);
+    }
+    if (racketLeft.racketState == 2) {
+      birdieRotation = PI-0.5;
+      birdieVelocity.add(leftHit3);
+    }
+    if (racketLeft.racketState == 3) {
+      birdieRotation = PI-0.5;
+      birdieVelocity.add(leftHit4);
+    }
+  }
+  onceLeft = false;
+  }
+
+  void rightSwings() {
     PVector rightHit1 = new PVector(-10, -7);
     PVector rightHit2 = new PVector(-12, -5);
     PVector rightHit3 = new PVector(-14, -4);
     PVector rightHit4 = new PVector(-20, 10);
-    if (key == 's'&& hit == true ) {
-      startRound = false;
-
-      birdieVelocity.x = 0;
-      birdieVelocity.y = 0;
-      if (racketLeft.racketState == 0) {
-        birdieRotation = PI-0.5;
-        birdieVelocity.add(leftHit1);
-      }
-
-      if (racketLeft.racketState == 1) {
-        birdieRotation = PI-0.5;
-        birdieVelocity.add(leftHit2);
-      }
-      if (racketLeft.racketState == 2) {
-        birdieRotation = PI-0.5;
-        birdieVelocity.add(leftHit3);
-      }
-      if (racketLeft.racketState == 3) {
-        birdieRotation = PI-0.5;
-        birdieVelocity.add(leftHit4);
-      }
+    
+if(onceRight){
+        birdie.birdieVelocity.x = 0;
+    birdie.birdieVelocity.y = 0;
+    if (racketRight.racketState == 0) {
+      birdieRotation = 0.4;
+      birdieVelocity.add(rightHit1);
     }
-
-    if (keyCode == DOWN && hit == true) {
-      birdieVelocity.x = 0;
-      birdieVelocity.y = 0;
-            startRound = false;
-      if (racketRight.racketState == 0) {
-        birdieRotation = 0.4;
-        birdieVelocity.add(rightHit1);
-      }
-      if (racketRight.racketState == 1) {
-        birdieRotation = 0.4;
-        birdieVelocity.add(rightHit2);
-      }
-      if (racketRight.racketState == 2) {
-        birdieRotation = 0.4;
-        birdieVelocity.add(rightHit3);
-      }
-      if (racketRight.racketState == 3) {
-        birdieRotation = 0.4;
-        birdieVelocity.add(rightHit4);
-      }
+    if (racketRight.racketState == 1) {
+      birdieRotation = 0.4;
+      birdieVelocity.add(rightHit2);
+    }
+    if (racketRight.racketState == 2) {
+      birdieRotation = 0.4;
+      birdieVelocity.add(rightHit3);
+    }
+    if (racketRight.racketState == 3) {
+      birdieRotation = 0.4;
+      birdieVelocity.add(rightHit4);
     }
   }
-}  float x = racket.racketPos.x - 150 + racket.size * cos(radians(racket.leftRotation));
-  float y = racket.racketPos.y - 150 + racket.size * sin(radians(racket.leftRotation));
+  onceRight = false;
+  }
   
-  // Draw the racket
-  rect(x, y, racket.size, racket.size);
+}
