@@ -45,6 +45,7 @@ public void scorebox(){
   text(birdie.getRightScore(), 700 + 50 , 100);
 
 }
+
 void reset() {
   background(220);
   racketLeft = new Racket(armPos1, true);

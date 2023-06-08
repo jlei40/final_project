@@ -96,13 +96,13 @@ public class Birdie {
     if (birdiePos.x > width/2) {
       leftScore++;
       startRound = true;
-      birdiePos.x = width/4;
+      birdiePos.x = width/20;
       birdiePos.y = 450;
       birdieVelocity = new PVector(0, 0);
     } else {
       rightScore++;
       startRound = true;
-      birdiePos.x = width/2 + width/4;
+      birdiePos.x = 19 * width/20;
       birdiePos.y = 450;
       birdieVelocity = new PVector(0, 0);
     }
