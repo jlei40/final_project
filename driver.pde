@@ -1,10 +1,10 @@
-private PVector player1Pos = new PVector(80, 85);
+private PVector player1Pos = new PVector(80, 135);
 private boolean animation1 = true;
 private boolean animation2 = false;
 
 private boolean animation3 = true;
 private boolean animation4 = false;
-private PVector player2Pos = new PVector(250, 85);
+private PVector player2Pos = new PVector(250, 135);
 
 private boolean left1 = false;
 private boolean right1 = false;
@@ -18,8 +18,13 @@ private boolean doneSwing2 = false;
 private PVector player1Velocity = new PVector(0, 0);
 private PVector player2Velocity= new PVector(0, 0);
 private PVector jumpV= new PVector(0, -7);
+
+  private int lastStateChangeTime = 0; // Time of the last state change
+  private int stateChangeInterval = 100; // Interval between state changes in milliseconds
 private int time = 0;
 
+private boolean onceRight=true;
+private boolean onceLeft=true;
 Racket racketLeft;
 Racket racketRight;
 Birdie birdie;
@@ -37,7 +42,7 @@ void reset() {
   background(220);
   racketLeft = new Racket(armPos1, true);
   racketRight = new Racket(armPos2, false);
-  birdie = new Birdie(armPos2);
+  birdie = new Birdie(player1Pos);
   loop();
 }
 
@@ -49,11 +54,12 @@ public void fieldmake() {
 }
 
 public void draw() {
+  if (birdie.hit && racketLeft.racketState != -1)System.out.println(racketLeft.racketState);
+  System.out.println(birdie.startRound);
   background(#E1B387);
   fieldmake();
   gravity();
   walkanimations();
-
 
   birdie.updateBirdie();
   birdie.makeBirdie();
@@ -165,35 +171,59 @@ public void gravity() {
   if (left2 && player2Pos.x > 186) player2Pos.x--;
 
   if (swing2) {
-    System.out.println(racketLeft.leftRotation );
+
     pushMatrix();
     if (racketLeft.leftRotation <330 && !doneSwing2) {
       rotate(radians(racketLeft.leftRotation));
       racketLeft.leftRotation +=5;
+      if (millis() - lastStateChangeTime >= stateChangeInterval ) {
+          racketLeft.racketState++;
+          lastStateChangeTime = millis();
+        }
+        if (birdie.hit){
+          birdie.startRound = false;
+        birdie.leftSwings();
+        
+      }
     } else if (racketLeft.leftRotation <=340 && racketLeft.leftRotation >= 220 ) {
     doneSwing2 = true;
+     racketLeft.racketState = -1;
     rotate(radians(racketLeft.leftRotation));
     racketLeft.leftRotation -=5;
     if (racketLeft.leftRotation <= 220){
     doneSwing2 = false;
     swing2 = false;
+    onceLeft = true;
     }
   }
     popMatrix();
   } 
+  
+  
   if (swing1) {
-    System.out.println(racketRight.rightRotation );
+
     pushMatrix();
     if (racketRight.rightRotation >=210 && !doneSwing) {
       rotate(radians(racketRight.rightRotation));
       racketRight.rightRotation -=5;
+      if (millis() - lastStateChangeTime >= stateChangeInterval ) {
+          racketRight.racketState++;
+          lastStateChangeTime = millis();
+        }
+        if (birdie.hit){
+          birdie.startRound = false;
+        birdie.rightSwings();
+        
+      }
     } else if (racketRight.rightRotation <=330 && racketRight.rightRotation >= 200 ) {
     doneSwing = true;
+    racketRight.racketState = -1;
     rotate(radians(racketRight.rightRotation));
     racketRight.rightRotation +=5;
     if (racketRight.rightRotation >= 330){
     doneSwing = false;
     swing1 = false;
+    onceRight = true;
     }
   }
     popMatrix();
@@ -207,14 +237,16 @@ public void keyPressed() {
   if (keyCode == 65) left1 = true;
   if (keyCode == 68) right1 = true;
   if (keyCode == 87 && player1Pos.y > 134) player1Velocity.add(jumpV);
-  if (keyCode == 83 ) swing2 = true;
-  if (keyCode == DOWN ) swing1 = true;
+  if (keyCode == 83 ) {swing2 = true;
+racketLeft.racketState = 0;
+
+}
+  if (keyCode == DOWN ) {swing1 = true;
+racketRight.racketState = 0;
+}
   if (keyCode == LEFT) left2 = true;
   if (keyCode == RIGHT) right2 = true;
   if (keyCode == UP && player2Pos.y > 134) player2Velocity.add(jumpV);
-  racketLeft.keyPressed();
-  racketRight.keyPressed();
-  birdie.keyPressed();
   if (key == 'p') reset();
 }
 
