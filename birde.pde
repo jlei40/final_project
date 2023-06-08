@@ -17,27 +17,30 @@ public class Birdie {
     rightScore = 0;
     startRound = true;
   }
-  
-  
-  public int getLeftScore(){
+
+
+  public int getLeftScore() {
     return leftScore;
   }
-  
-  public int getRightScore(){
+
+  public int getRightScore() {
     return rightScore;
   }
-  
+
   public boolean hitbox(Racket racket) {
+
     if (racket.leftSide) {
-      float x = racket.racketPos.x  + racket.size * cos(radians(racket.leftRotation))*2;
-      float y = racket.racketPos.y-30 + racket.size * sin(radians(racket.leftRotation))*2;
-      if (rectRect(birdiePos.x-20, birdiePos.y-10, size, size, x, y, racket.size, racket.size)) {
+      float x = racket.racketPos.x-30  + racket.size * cos(radians(racket.leftRotation))*2;
+      float y = racket.racketPos.y + racket.size * sin(radians(racket.leftRotation))*2;
+
+      if (rectRect(birdiePos.x-20, birdiePos.y-10, size, size, x+30, y, racket.size*a, racket.size*b)) {
+
         return true;
       } else return false;
     } else {
       float x = racket.racketPos.x  + racket.size * cos(radians(racket.rightRotation))*2;
-      float y = racket.racketPos.y-30 + racket.size * sin(radians(racket.rightRotation))*2;
-      if (rectRect(birdiePos.x-20, birdiePos.y-10, size, size, x, y, racket.size, racket.size)) {
+      float y = racket.racketPos.y + racket.size * sin(radians(racket.rightRotation))*2;
+      if (rectRect(birdiePos.x-20, birdiePos.y-10, size, size, x-85*c, y, racket.size*c, racket.size*d)) {
 
 
         return true;
@@ -71,7 +74,7 @@ public class Birdie {
   public void updateBirdie() {
 
     if (!startRound) {
-      PVector gravity = new PVector(0, 0.1);
+      PVector gravity = new PVector(0, 0.2);
       birdieVelocity.add(gravity);
       if (birdieVelocity.x > 0 ) {
         birdieRotation += 0.01;
@@ -86,6 +89,19 @@ public class Birdie {
       // Check boundaries
       if (birdiePos.y > height-100) {
         score();
+      }
+      if (birdiePos.x < 0) {
+        birdieVelocity.x *= -0.3;
+        birdieVelocity.y *= -0.7;
+        birdiePos.x = 0;
+      }
+      if (birdiePos.x > width ) {
+        birdieVelocity.x *= -0.3;
+        birdieVelocity.y *= -0.7;
+        birdiePos.x = width;
+      }
+      if (birdiePos.x>=695 && birdiePos.x<=705&& birdiePos.y>625) {
+        birdieVelocity.x *= -0.9;
       }
     } else {
       return;
@@ -112,7 +128,7 @@ public class Birdie {
       text("Player2 wins!", width/2 - 100, height/2);
       noLoop();
     } else if (leftScore == 7) {
-      
+
       textSize(32);
       fill(#FFFFFF);
       text("Player1 wins!", width/2 - 100, height/2);
@@ -121,61 +137,60 @@ public class Birdie {
   }
   //good to go
   void leftSwings() {
-    PVector leftHit1 = new PVector(10, -7);
-    PVector leftHit2 = new PVector(12, -5);
-    PVector leftHit3 = new PVector(14, -4);
-    PVector leftHit4 = new PVector(20, 10);
-if(onceLeft){
-        birdie.birdieVelocity.x = 0;
-    birdie.birdieVelocity.y = 0;
-    if (racketLeft.racketState == 0) {
-      birdieRotation = PI-0.5;
-      birdieVelocity.add(leftHit1);
-    }
+    PVector leftHit1 = new PVector(10, -10);
+    PVector leftHit2 = new PVector(14, -9);
+    PVector leftHit3 = new PVector(18, -7);
+    PVector leftHit4 = new PVector(20, 7);
+    if (onceLeft) {
+      birdie.birdieVelocity.x = 0;
+      birdie.birdieVelocity.y = 0;
+      if (racketLeft.racketState == 0) {
+        birdieRotation = PI-0.5;
+        birdieVelocity.add(leftHit1);
+      }
 
-    if (racketLeft.racketState == 1) {
-      birdieRotation = PI-0.5;
-      birdieVelocity.add(leftHit2);
+      if (racketLeft.racketState == 1) {
+        birdieRotation = PI-0.5;
+        birdieVelocity.add(leftHit2);
+      }
+      if (racketLeft.racketState == 2) {
+        birdieRotation = PI-0.5;
+        birdieVelocity.add(leftHit3);
+      }
+      if (racketLeft.racketState == 3) {
+        birdieRotation = PI-0.5;
+        birdieVelocity.add(leftHit4);
+      }
     }
-    if (racketLeft.racketState == 2) {
-      birdieRotation = PI-0.5;
-      birdieVelocity.add(leftHit3);
-    }
-    if (racketLeft.racketState == 3) {
-      birdieRotation = PI-0.5;
-      birdieVelocity.add(leftHit4);
-    }
-  }
-  onceLeft = false;
+    onceLeft = false;
   }
 
   void rightSwings() {
-    PVector rightHit1 = new PVector(-10, -7);
-    PVector rightHit2 = new PVector(-12, -5);
-    PVector rightHit3 = new PVector(-14, -4);
-    PVector rightHit4 = new PVector(-20, 10);
-    
-if(onceRight){
-        birdie.birdieVelocity.x = 0;
-    birdie.birdieVelocity.y = 0;
-    if (racketRight.racketState == 0) {
-      birdieRotation = 0.4;
-      birdieVelocity.add(rightHit1);
+    PVector rightHit1 = new PVector(-10, -10);
+    PVector rightHit2 = new PVector(-12, -9);
+    PVector rightHit3 = new PVector(-14, -7);
+    PVector rightHit4 = new PVector(-20, 7);
+
+    if (onceRight) {
+      birdie.birdieVelocity.x = 0;
+      birdie.birdieVelocity.y = 0;
+      if (racketRight.racketState == 0) {
+        birdieRotation = 0.4;
+        birdieVelocity.add(rightHit1);
+      }
+      if (racketRight.racketState == 1) {
+        birdieRotation = 0.4;
+        birdieVelocity.add(rightHit2);
+      }
+      if (racketRight.racketState == 2) {
+        birdieRotation = 0.4;
+        birdieVelocity.add(rightHit3);
+      }
+      if (racketRight.racketState == 3) {
+        birdieRotation = 0.4;
+        birdieVelocity.add(rightHit4);
+      }
     }
-    if (racketRight.racketState == 1) {
-      birdieRotation = 0.4;
-      birdieVelocity.add(rightHit2);
-    }
-    if (racketRight.racketState == 2) {
-      birdieRotation = 0.4;
-      birdieVelocity.add(rightHit3);
-    }
-    if (racketRight.racketState == 3) {
-      birdieRotation = 0.4;
-      birdieVelocity.add(rightHit4);
-    }
+    onceRight = false;
   }
-  onceRight = false;
-  }
-  
 }
