@@ -68,7 +68,6 @@ public void draw() {
   gravity();
   walkanimations();
   
-  scorebox();
 
 
   birdie.updateBirdie();
@@ -90,6 +89,9 @@ public void draw() {
   } else {
     birdie.hit = birdie.hitbox(racketLeft);
   }
+  
+    scorebox();
+
 }
 
 public void walkanimations() {

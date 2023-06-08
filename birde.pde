@@ -106,17 +106,16 @@ public class Birdie {
       birdiePos.y = 450;
       birdieVelocity = new PVector(0, 0);
     }
-    if (rightScore > 6) {
-      textAlign(CENTER, CENTER);
+    if (rightScore == 7) {
       textSize(60);
       fill(#FFFFFF);
-      text("Player2 wins!", width/2, height/2);
+      text("Player2 wins!", width/2 - 100, height/2);
       noLoop();
-    } else if (leftScore > 6) {
-      textAlign(CENTER, CENTER);
+    } else if (leftScore == 7) {
+      
       textSize(32);
       fill(#FFFFFF);
-      text("Player1 wins!", width/2, height/2);
+      text("Player1 wins!", width/2 - 100, height/2);
       noLoop();
     }
   }
