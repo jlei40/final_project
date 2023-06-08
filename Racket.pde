@@ -17,21 +17,25 @@ public class Racket {
    
     
     if (leftSide) {
+      fill(#FF0000);
       pushMatrix();
       racketPos.x = pos.x*4-55;
       racketPos.y = pos.y*4+55;
       translate(pos.x*4-55, pos.y*4+55);
       rotate(radians(leftRotation));
       rect(0,0, size*1.5, size/10);
+      fill(#FFFFFF);
       ellipse(size*1.5,  size/10, size, size/3);
       popMatrix();
     } else {
+      fill(#00FFFF);
       pushMatrix();
             racketPos.x = pos.x*4+55;
       racketPos.y = pos.y*4+55;
       translate(pos.x*4+55, pos.y*4+55);
       rotate(radians(rightRotation));
       rect(0, 10, size*1.5, size/10);
+      fill(#FFFFFF);
       ellipse(size*1.5,  size/10, size, size/3);
       popMatrix();
     }

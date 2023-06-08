@@ -17,13 +17,21 @@ public class Birdie {
     rightScore = 0;
     startRound = true;
   }
+  
+  
+  public int getLeftScore(){
+    return leftScore;
+  }
+  
+  public int getRightScore(){
+    return rightScore;
+  }
+  
   public boolean hitbox(Racket racket) {
-    rect(birdiePos.x-20, birdiePos.y-10, size, size);
     if (racket.leftSide) {
       float x = racket.racketPos.x  + racket.size * cos(radians(racket.leftRotation))*2;
       float y = racket.racketPos.y-30 + racket.size * sin(radians(racket.leftRotation))*2;
       if (rectRect(birdiePos.x-20, birdiePos.y-10, size, size, x, y, racket.size, racket.size)) {
-        rect(x, y, racket.size, racket.size);
         return true;
       } else return false;
     } else {
@@ -31,7 +39,6 @@ public class Birdie {
       float y = racket.racketPos.y-30 + racket.size * sin(radians(racket.rightRotation))*2;
       if (rectRect(birdiePos.x-20, birdiePos.y-10, size, size, x, y, racket.size, racket.size)) {
 
-        rect(x, y, racket.size, racket.size);
 
         return true;
       } else return false;
@@ -49,13 +56,14 @@ public class Birdie {
   }
 
   public void makeBirdie() {
-
+    fill(#FFFFFF);
     pushMatrix();
     translate(birdiePos.x, birdiePos.y);
     rotate(birdieRotation);
     ellipse(0, 0, size-15, size/3);
     float featherSize = size * 0.5;
     float featherOffset = featherSize * 0.2;
+    fill(#DAEE01);
     triangle(featherOffset, 0, featherSize + featherOffset, -featherSize, featherSize + featherOffset, featherSize);
     popMatrix();
   }
@@ -98,17 +106,17 @@ public class Birdie {
       birdiePos.y = 450;
       birdieVelocity = new PVector(0, 0);
     }
-    if (rightScore > 6) {
+    if (rightScore > 7) {
       textAlign(CENTER, CENTER);
       textSize(60);
-      fill(0, 255, 0);
-      text("PLayer2 win!", width/2, height/2);
+      fill(#FFFFFF);
+      text("Player2 wins!", width/2, height/2);
       noLoop();
-    } else if (leftScore > 6) {
+    } else if (leftScore > 7) {
       textAlign(CENTER, CENTER);
       textSize(32);
-      fill(0, 255, 0);
-      text("PLayer1 win!", width/2, height/2);
+      fill(#FFFFFF);
+      text("Player1 wins!", width/2, height/2);
       noLoop();
     }
   }

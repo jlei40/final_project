@@ -19,8 +19,8 @@ private PVector player1Velocity = new PVector(0, 0);
 private PVector player2Velocity= new PVector(0, 0);
 private PVector jumpV= new PVector(0, -7);
 
-  private int lastStateChangeTime = 0; // Time of the last state change
-  private int stateChangeInterval = 100; // Interval between state changes in milliseconds
+private int lastStateChangeTime = 0; // Time of the last state change
+private int stateChangeInterval = 100; // Interval between state changes in milliseconds
 private int time = 0;
 
 private boolean onceRight=true;
@@ -37,6 +37,13 @@ public void setup() {
   racketLeft = new Racket(armPos1, true);
   racketRight = new Racket(armPos2, false);
   birdie = new Birdie(player1Pos);
+}
+
+public void scorebox(){
+  textSize(100);
+  text(birdie.getLeftScore(), 700 - 100, 100);
+  text(birdie.getRightScore(), 700 + 50 , 100);
+
 }
 void reset() {
   background(220);
@@ -60,12 +67,17 @@ public void draw() {
   fieldmake();
   gravity();
   walkanimations();
+  
+  scorebox();
+
 
   birdie.updateBirdie();
   birdie.makeBirdie();
 
   player1make(player1Pos);
   player2make(player2Pos);
+  
+
   
   armPos1 = new PVector(player1Pos.x + 13, player1Pos.y + 13);
   armPos2 = new PVector(player2Pos.x - 16, player2Pos.y + 11);
@@ -103,6 +115,7 @@ public void walkanimations() {
 
 
 public void player1make(PVector pos) {
+  fill(#ffffff);
   pushMatrix(); // Save the current transformation matrix
   scale(4); // Apply the scale locally
   circle(pos.x, pos.y + 10, 10); // head
@@ -113,6 +126,7 @@ public void player1make(PVector pos) {
   popMatrix(); // Restore the previous transformation matrix
 }
 public void player2make(PVector pos) {
+  fill(#ffffff);
   pushMatrix();
   scale(4);
   circle(pos.x, pos.y + 10, 10); // head
